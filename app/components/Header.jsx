@@ -1,12 +1,25 @@
 import {Await, NavLink, useMatches} from '@remix-run/react';
+import {Image} from '@shopify/hydrogen';
 import {Suspense} from 'react';
 
 export function Header({header, isLoggedIn, cart}) {
   const {shop, menu} = header;
+
+  console.log(shop);
+
   return (
     <header className="header">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
+        {shop.brand.logo.image ? (
+          <Image
+            data={shop.brand.logo.image}
+            alt="Ti Amor Logo"
+            aspectRatio="1/1"
+            width={60}
+          />
+        ) : (
+          <strong>{shop.name}</strong>
+        )}
       </NavLink>
       <HeaderMenu menu={menu} viewport="desktop" />
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
